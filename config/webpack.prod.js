@@ -45,7 +45,7 @@ module.exports = {
   entry: entries,
   output: {
     path: path.resolve(__dirname, '../build'),
-    publicPath: '/',
+    publicPath: '/ty/',
     filename: '[name].js'
   },
   module: {

@@ -97,7 +97,7 @@ export default class Index extends Component {
         <Card full>
           <Card.Header
             title="添加文章"
-            thumb="http://photo.siyan.tech/xiugai.png"
+            thumb="https://siyan.tech/ty/static/xiugai.png"
             thumbStyle={{ width: "20px" }}
           />
           <Card.Body>
