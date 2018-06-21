@@ -3,7 +3,9 @@
   padding: 0;
 }
 
-html, body, body > div {
+html,
+body,
+body > div {
   height: 100%;
 }
 
@@ -14,4 +16,39 @@ html, body, body > div {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+}
+
+#contentEditor {
+  width: 100%;
+  min-height: 300px;
+  box-sizing: border-box;
+  padding: 10px;
+  color: #444;
+  background: white;
+  margin-top: 18px;
+}
+
+.edit-title {
+  color: #595959;
+  font-size: 15px;
+  border-left: #3590ff solid 3px;
+  padding-left: 10px;
+  height: 30px;
+  line-height: 30px;
+  background: white;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 8px #f0f1f2;
+}
+
+.am-card-body {
+  padding: 0px !important;
+}
+
+.am-card-header {
+  font-size: 14px !important;
+}
+
+.submit{
+  padding: 10px;
+  background: white;
 }
