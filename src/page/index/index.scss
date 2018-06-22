@@ -26,6 +26,10 @@ body > div {
   color: #444;
   background: white;
   margin-top: 18px;
+
+  img {
+    max-width: 100%;
+  }
 }
 
 .edit-title {
@@ -45,10 +49,26 @@ body > div {
 }
 
 .am-card-header {
-  font-size: 14px !important;
+  font-size: 16px !important;
+  border-top: #3590ff solid 2px;
 }
 
-.submit{
-  padding: 10px;
+.submit {
+  padding: 10px 10px 0 10px;
   background: white;
+  z-index: -100;
+  margin-bottom: 10px;
+}
+
+
+.Eleditor-controller{
+  z-index: 1000;
+}
+
+.Eleditor-delete-layer{
+  z-index: 999;
+}
+
+.am-card-full{
+  height:  auto; 
 }
