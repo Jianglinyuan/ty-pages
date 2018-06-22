@@ -29,7 +29,11 @@ export default class Index extends Component {
     const that = this;
     const parsedQuery = queryString.parse(location.search);
 
-    if (!parsedQuery.id || !parsedQuery.openId) {
+    const { data } = await axios.get(
+      "https://siyan.tech/ty-api/getUser?openID=" + parsedQuery.openId
+    );
+
+    if (!parsedQuery.id && parsedQuery.isnew !== "1") {
       Toast.fail("错误的请求信息！");
       this.setState({
         error: true
@@ -37,7 +41,9 @@ export default class Index extends Component {
       return;
     }
     this.setState({
-      type: [parsedQuery.type]
+      type: [parsedQuery.type],
+      isnew: parsedQuery.isnew === "1",
+      user: data
     });
     this.id = parsedQuery.id;
     this.openId = parsedQuery.openId;
@@ -134,13 +140,16 @@ export default class Index extends Component {
       {
         text: "确认",
         onPress: async () => {
-          const result = await axios.post(that.posturl, {
+          console.log(that.posturl);
+          const result = await axios.post(config[that.state.type + "post"], {
             content: that.state.content,
             id: that.id,
             openId: that.openId,
-            title: this.state.title
+            title: this.state.title,
+            author: this.state.user.nickName
           });
           Toast.success("恭喜您操作成功");
+          if (result.data.id) this.id = result.data.id;
           wx.miniProgram.navigateTo({
             url: "/pages/anlidetail?id=" + this.id
           });
@@ -200,6 +209,7 @@ export default class Index extends Component {
               data={seasons}
               title="选择类型"
               cols={1}
+              disabled={!this.state.isnew}
               value={this.state.type}
               onChange={v => this.setState({ type: v })}
               onOk={v => this.setState({ type: v })}
