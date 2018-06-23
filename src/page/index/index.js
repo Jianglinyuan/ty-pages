@@ -55,7 +55,7 @@ export default class Index extends Component {
     const artEditor = (this.artEditor = new Eleditor({
       el: "#contentEditor",
       upload: {
-        server: "/upload.php",
+        server: "/ty-api/upload",
         fileSizeLimit: 2,
         compress: true
       },
