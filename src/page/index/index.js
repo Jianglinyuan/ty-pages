@@ -11,7 +11,8 @@ import {
   InputItem,
   Toast,
   Picker,
-  List
+  List,
+  ImagePicker
 } from "antd-mobile";
 import config from "./config";
 import "./index.scss";
@@ -22,7 +23,8 @@ const alert = Modal.alert;
 export default class Index extends Component {
   state = {
     pageTitle: "添加案例",
-    type: ["anli"]
+    type: ["anli"],
+    pic: []
   };
 
   async componentDidMount() {
@@ -71,7 +73,7 @@ export default class Index extends Component {
           id: "insertVideo",
           // tag: 'p,img', //指定P标签操作，可不填
           name: "插入视频",
-          handle: function(select, controll) {
+          handle: function (select, controll) {
             //回调返回选择的dom对象和控制按钮对象
             /*因为上传要提前绑定按钮到webuploader，所以这里不做上传逻辑，写在mounted*/
             /*!!!!!!返回false编辑面板不会关掉*/
@@ -81,7 +83,7 @@ export default class Index extends Component {
         "undo",
         "cancel"
       ],
-      mounted: function() {
+      mounted: function () {
         /*以下是扩展插入视频的演示*/
         var _videoUploader = WebUploader.create({
           auto: true,
@@ -97,7 +99,7 @@ export default class Index extends Component {
           },
           fileVal: "video"
         });
-        _videoUploader.on("uploadSuccess", function(_file, _call) {
+        _videoUploader.on("uploadSuccess", function (_file, _call) {
           if (_call.status == 0) {
             return window.alert(_call.msg);
           }
@@ -111,7 +113,7 @@ export default class Index extends Component {
           contentEditor.hideEditorControllerLayer();
         });
       },
-      changer: function(value) {
+      changer: function (value) {
         const _content = artEditor.getContent();
         that.setState({
           content: _content
@@ -123,13 +125,21 @@ export default class Index extends Component {
       const { data } = await axios.get(`${url}?id=${parsedQuery.id}`);
       this.setState({
         title: data.title,
-        pageTitle: "修改案例"
+        pageTitle: "修改案例",
+        pic: [{url: data.pic, id: 0}]
       });
       artEditor.append(data.content);
       that.setState({
         content: data.content
       });
     }
+  }
+
+  piconChange = (files, type, index) => {
+    console.log(files)
+    this.setState({
+      pic: files,
+    });
   }
 
   handerSubmit = () => {
@@ -146,7 +156,8 @@ export default class Index extends Component {
             id: that.id,
             openId: that.openId,
             title: this.state.title,
-            author: this.state.user.nickName
+            author: this.state.user.nickName,
+            pic: this.state.pic[0].url
           });
           Toast.success("恭喜您操作成功");
           if (result.data.id) this.id = result.data.id;
@@ -173,6 +184,7 @@ export default class Index extends Component {
         </div>
       );
     }
+
     const seasons = [
       {
         label: "案例",
@@ -216,6 +228,16 @@ export default class Index extends Component {
             >
               <List.Item arrow="horizontal">文章类型</List.Item>
             </Picker>
+            <div className="pic">
+                <div className="pic-label">文章封面</div>
+                <ImagePicker
+                  files={this.state.pic}
+                  onChange={this.piconChange}
+                  onImageClick={(index, fs) => console.log(index, fs)}
+                  selectable={this.state.pic.length < 1}
+                  accept="image/gif,image/jpeg,image/jpg,image/png"
+                />
+              </div>
             <div id="contentEditor" />
           </Card.Body>
         </Card>

@@ -72,3 +72,17 @@ body > div {
 .am-card-full{
   height:  auto; 
 }
+
+.pic{
+  margin-left: 15px;
+  margin-right: 15px;
+  margin-bottom: 5px;
+  border-bottom: #3590ff solid 2px;
+
+  .pic-label{
+    font-size: 17px;
+    line-height: 1.5;
+    text-align: left;
+    color: #000;
+  }
+}
